@@ -88,10 +88,10 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                   buttonType: ButtonType.secondary,
                   width: 80.w,
                   onTap: () {
-                    // if (_emailController.text == 'admin@mail.com' &&
-                    //     _passwordController.text == '123456') {
-                    context.pushReplacementNamed(home);
-                    // }
+                    if (_emailController.text == 'admin@mail.com' &&
+                        _passwordController.text == '123456') {
+                      context.pushReplacementNamed(home);
+                    }
                   },
                   text: 'เข้าสู่ระบบ',
                 ),
