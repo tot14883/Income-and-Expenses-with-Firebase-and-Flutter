@@ -1,0 +1,12 @@
+const String root = 'root';
+const String dashboard = 'dashboard';
+const String noInternet = 'noInternet';
+const String login = 'login';
+const String home = 'home';
+const String incomeAndExpenses = 'income-expenses';
+const String saving = 'saving';
+const String summarize = 'summarize';
+const String addCash = 'add-cash';
+const String editSaving = 'edit-saving';
+const String editIncomeExpenses = 'edit-income-expenses';
+const String summary = 'summary';

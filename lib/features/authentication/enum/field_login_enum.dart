@@ -1,0 +1,4 @@
+enum FieldLogin {
+  email,
+  password,
+}

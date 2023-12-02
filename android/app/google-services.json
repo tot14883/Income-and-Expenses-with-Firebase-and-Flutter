@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "558665139592",
+    "project_id": "smart-money-5c11b",
+    "storage_bucket": "smart-money-5c11b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558665139592:android:1d04ef0986cbe0e2a0263d",
+        "android_client_info": {
+          "package_name": "com.asna.smart_money"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPm9JTUCX08mHSCP4mfOoxfLJ7NAi_xNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:558665139592:android:7f3157bca534cdfca0263d",
+        "android_client_info": {
+          "package_name": "com.asna.smartmoney.smart_money"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPm9JTUCX08mHSCP4mfOoxfLJ7NAi_xNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
