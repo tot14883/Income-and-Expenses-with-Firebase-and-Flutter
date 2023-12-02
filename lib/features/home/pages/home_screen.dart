@@ -32,9 +32,29 @@ class HomeScreen extends StatelessWidget {
               BaseButton(
                 width: 120.w,
                 onTap: () {
-                  context.pushNamed(incomeAndExpenses);
+                  context.pushNamed(
+                    incomeAndExpenses,
+                    queryParameters: {
+                      'isIncome': 'true',
+                    },
+                  );
                 },
-                text: 'รายรับ-รายจ่าย',
+                text: 'รายรับ',
+              ),
+              SizedBox(
+                height: 8.h,
+              ),
+              BaseButton(
+                width: 120.w,
+                onTap: () {
+                  context.pushNamed(
+                    incomeAndExpenses,
+                    queryParameters: {
+                      'isIncome': 'false',
+                    },
+                  );
+                },
+                text: 'รายจ่าย',
               ),
               SizedBox(
                 height: 8.h,

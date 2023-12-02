@@ -51,9 +51,10 @@ class IncomeExpensesCardWidget extends StatelessWidget {
               PopupMenuButton<String>(
                 onSelected: (String value) async {
                   if (value == 'delete') {
-                    context
-                        .read<IncomeExpensesBloc>()
-                        .deleteIncomeExpenses('${incomeExpensesItem.id}');
+                    context.read<IncomeExpensesBloc>().deleteIncomeExpenses(
+                          '${incomeExpensesItem.id}',
+                          isIncome,
+                        );
                   } else if (value == 'edit') {
                     final result = await context.pushNamed<bool>(
                       editIncomeExpenses,

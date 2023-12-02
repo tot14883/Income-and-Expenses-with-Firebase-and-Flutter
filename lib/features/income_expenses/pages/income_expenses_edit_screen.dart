@@ -9,7 +9,6 @@ import 'package:smart_money/features/income_expenses/bloc/income_expenses_bloc.d
 import 'package:smart_money/features/income_expenses/enum/field_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/enum/type_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/model/response/my_account_response.dart';
-import 'package:smart_money/features/saving/widgets/saving_switch_widget.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
@@ -22,10 +21,12 @@ import 'package:smart_money/widgets/base_text_field.dart';
 
 class IncomeExpensesEditScreen extends StatefulWidget {
   final MyAccountDetailResponse myAccountDetail;
+  final bool isIncome;
 
   const IncomeExpensesEditScreen({
     super.key,
     required this.myAccountDetail,
+    this.isIncome = true,
   });
 
   @override
@@ -39,7 +40,7 @@ class _IncomeExpensesEditScreenState
   final TextEditingController _money = TextEditingController();
   final TextEditingController _detail = TextEditingController();
   final TextEditingController _dateTime = TextEditingController();
-  bool isIncrease = false;
+  bool isIncome = false;
 
   @override
   void initState() {
@@ -48,6 +49,8 @@ class _IncomeExpensesEditScreenState
       _money.text = '${myAccountDetail.money}';
       _detail.text = '${myAccountDetail.detail}';
       _dateTime.text = '${myAccountDetail.dateTime}';
+
+      isIncome = widget.isIncome;
     });
     super.initState();
   }
@@ -58,7 +61,7 @@ class _IncomeExpensesEditScreenState
       isLoadingStream: context.watch<IncomeExpensesBloc>().isLoading,
       appBar: BaseAppBar(
         title: Text(
-          'แก้ไขรายรับ - รายจ่าย',
+          isIncome ? 'แก้ไขรายรับ' : 'แก้ไขรายจ่าย',
           style: AppStyle.txtHeader2,
         ),
         bgColor: AppColor.whiteColor,
@@ -149,20 +152,20 @@ class _IncomeExpensesEditScreenState
                 SizedBox(
                   height: 8.h,
                 ),
-                SavingSwitchWidget(
-                  initialValue:
-                      widget.myAccountDetail.type == TypeIncomeExpenses.income
-                          ? false
-                          : true,
-                  onChanged: (val) {
-                    setState(() {
-                      isIncrease = val;
-                    });
-                  },
-                ),
-                SizedBox(
-                  height: 8.h,
-                ),
+                // SavingSwitchWidget(
+                //   initialValue:
+                //       widget.myAccountDetail.type == TypeIncomeExpenses.income
+                //           ? false
+                //           : true,
+                //   onChanged: (val) {
+                //     setState(() {
+                //       isIncrease = val;
+                //     });
+                //   },
+                // ),
+                // SizedBox(
+                //   height: 8.h,
+                // ),
                 BaseButton(
                   onTap: () {
                     _formKey.currentState?.save(
@@ -171,7 +174,7 @@ class _IncomeExpensesEditScreenState
                             .read<IncomeExpensesBloc>()
                             .editIncomeExpenses(
                               '${widget.myAccountDetail.id}',
-                              !isIncrease,
+                              isIncome,
                               '${widget.myAccountDetail.money}',
                               widget.myAccountDetail.type ??
                                   TypeIncomeExpenses.income,

@@ -76,14 +76,21 @@ class GoRouterProvider {
         GoRoute(
           path: '/$incomeAndExpenses',
           name: incomeAndExpenses,
-          pageBuilder: (context, state) => CustomPageRouteBuilder.route(
-            transitionType: RouteTransition.fadeThrough,
-            key: state.pageKey,
-            child: BlocProvider<IncomeExpensesBloc>(
-              create: (BuildContext context) => getIt<IncomeExpensesBloc>(),
-              child: IncomeExpensesScreen(key: state.pageKey),
-            ),
-          ),
+          pageBuilder: (context, state) {
+            final isIncome = state.uri.queryParameters['isIncome'];
+
+            return CustomPageRouteBuilder.route(
+              transitionType: RouteTransition.fadeThrough,
+              key: state.pageKey,
+              child: BlocProvider<IncomeExpensesBloc>(
+                create: (BuildContext context) => getIt<IncomeExpensesBloc>(),
+                child: IncomeExpensesScreen(
+                  key: state.pageKey,
+                  isIncome: bool.parse(isIncome ?? 'true'),
+                ),
+              ),
+            );
+          },
         ),
         GoRoute(
           path: '/$noInternet',
@@ -97,14 +104,23 @@ class GoRouterProvider {
         GoRoute(
           path: '/$addCash',
           name: addCash,
-          pageBuilder: (context, state) => CustomPageRouteBuilder.route(
-            transitionType: RouteTransition.fadeThrough,
-            key: state.pageKey,
-            child: BlocProvider<IncomeExpensesBloc>(
-              create: (BuildContext context) => getIt<IncomeExpensesBloc>(),
-              child: AddCashScreen(key: state.pageKey),
-            ),
-          ),
+          pageBuilder: (context, state) {
+            final isIncome = state.uri.queryParameters['isIncome'];
+
+            return CustomPageRouteBuilder.route(
+              transitionType: RouteTransition.fadeThrough,
+              key: state.pageKey,
+              child: BlocProvider<IncomeExpensesBloc>(
+                create: (BuildContext context) => getIt<IncomeExpensesBloc>(),
+                child: AddCashScreen(
+                  key: state.pageKey,
+                  isIncome: bool.parse(
+                    isIncome ?? 'true',
+                  ),
+                ),
+              ),
+            );
+          },
         ),
         GoRoute(
           path: '/$saving',
@@ -142,6 +158,7 @@ class GoRouterProvider {
           name: editIncomeExpenses,
           pageBuilder: (context, state) {
             final _myAccountDetail = state.extra as MyAccountDetailResponse;
+            final isIncome = state.uri.queryParameters['isIncome'];
 
             return CustomPageRouteBuilder.route(
               transitionType: RouteTransition.fadeThrough,
@@ -151,6 +168,7 @@ class GoRouterProvider {
                 child: IncomeExpensesEditScreen(
                   key: state.pageKey,
                   myAccountDetail: _myAccountDetail,
+                  isIncome: bool.parse(isIncome ?? 'true'),
                 ),
               ),
             );

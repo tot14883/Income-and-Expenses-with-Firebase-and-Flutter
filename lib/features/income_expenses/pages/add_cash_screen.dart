@@ -16,7 +16,11 @@ import 'package:smart_money/widgets/base_state.dart';
 import 'package:smart_money/widgets/base_text_field.dart';
 
 class AddCashScreen extends StatefulWidget {
-  const AddCashScreen({super.key});
+  final bool isIncome;
+  const AddCashScreen({
+    super.key,
+    this.isIncome = true,
+  });
 
   @override
   _AddCashScreenState createState() => _AddCashScreenState();
@@ -71,16 +75,24 @@ class _AddCashScreenState extends BaseState<AddCashScreen> {
                 SizedBox(
                   height: 8.h,
                 ),
-                BaseButton(
-                  onTap: () async {
-                    final result =
-                        await context.read<IncomeExpensesBloc>().addCashMoney();
+                BlocBuilder<IncomeExpensesBloc, IncomeExpensesState>(
+                  builder: (context, list) {
+                    final incomeExpensesMoney =
+                        list.myAccount?.incomeExpenseMoney;
 
-                    if (result) {
-                      context.pop(true);
-                    }
+                    return BaseButton(
+                      onTap: () async {
+                        final result = await context
+                            .read<IncomeExpensesBloc>()
+                            .addCashMoney(widget.isIncome, incomeExpensesMoney);
+
+                        if (result) {
+                          context.pop(true);
+                        }
+                      },
+                      text: 'บันทึก',
+                    );
                   },
-                  text: 'บันทึก',
                 ),
                 SizedBox(
                   height: 16.h,

@@ -10,7 +10,6 @@ import 'package:smart_money/features/income_expenses/bloc/income_expenses_bloc.d
 import 'package:smart_money/features/income_expenses/bloc/state/income_expenses_state.dart';
 import 'package:smart_money/features/income_expenses/enum/field_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/widgets/income_expenses_list_widget.dart';
-import 'package:smart_money/features/income_expenses/widgets/income_expenses_switch_widget.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
@@ -22,7 +21,12 @@ import 'package:smart_money/widgets/base_state.dart';
 import 'package:smart_money/widgets/base_text_field.dart';
 
 class IncomeExpensesScreen extends StatefulWidget {
-  const IncomeExpensesScreen({super.key});
+  final bool isIncome;
+
+  const IncomeExpensesScreen({
+    super.key,
+    this.isIncome = true,
+  });
 
   @override
   _IncomeExpensesScreenState createState() => _IncomeExpensesScreenState();
@@ -34,12 +38,15 @@ class _IncomeExpensesScreenState extends BaseState<IncomeExpensesScreen> {
   final TextEditingController _cash = TextEditingController();
   final TextEditingController _detail = TextEditingController();
 
-  bool isIncome = false;
+  bool isIncome = true;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<IncomeExpensesBloc>().readIncomeExpensesList();
+      context.read<IncomeExpensesBloc>().readIncomeExpensesList(
+            widget.isIncome,
+          );
+      isIncome = widget.isIncome;
     });
     super.initState();
   }
@@ -60,7 +67,7 @@ class _IncomeExpensesScreenState extends BaseState<IncomeExpensesScreen> {
       isLoadingStream: context.watch<IncomeExpensesBloc>().isLoading,
       appBar: BaseAppBar(
         title: Text(
-          'รายรับ-รายจ่าย',
+          isIncome ? 'รายรับ' : 'รายจ่าย',
           style: AppStyle.txtHeader2,
         ),
         bgColor: AppColor.whiteColor,
@@ -68,12 +75,17 @@ class _IncomeExpensesScreenState extends BaseState<IncomeExpensesScreen> {
           PopupMenuButton<String>(
             onSelected: (String value) async {
               if (value == '1') {
-                final result = await context.pushNamed<bool>(addCash);
+                final result = await context.pushNamed<bool>(
+                  addCash,
+                  queryParameters: {
+                    'isIncome': '$isIncome',
+                  },
+                );
 
                 if (result!) {
                   await context
                       .read<IncomeExpensesBloc>()
-                      .readIncomeExpensesList();
+                      .readIncomeExpensesList(isIncome);
                 }
               }
             },
@@ -184,16 +196,16 @@ class _IncomeExpensesScreenState extends BaseState<IncomeExpensesScreen> {
                           SizedBox(
                             height: 8.h,
                           ),
-                          IncomeExpensesSwitchWidget(
-                            onChanged: (val) {
-                              setState(() {
-                                isIncome = val;
-                              });
-                            },
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
+                          // IncomeExpensesSwitchWidget(
+                          //   onChanged: (val) {
+                          //     setState(() {
+                          //       isIncome = val;
+                          //     });
+                          //   },
+                          // ),
+                          // SizedBox(
+                          //   height: 8.h,
+                          // ),
                           BaseButton(
                             onTap: () async {
                               if (_cash.text.isEmpty ||

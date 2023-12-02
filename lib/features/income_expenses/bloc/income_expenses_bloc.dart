@@ -5,6 +5,7 @@ import 'package:smart_money/features/income_expenses/bloc/state/income_expenses_
 import 'package:smart_money/features/income_expenses/enum/field_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/enum/type_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/model/request/my_account_request.dart';
+import 'package:smart_money/features/income_expenses/model/response/my_account_response.dart';
 import 'package:smart_money/features/income_expenses/usecase/add_cash_usecase.dart';
 import 'package:smart_money/features/income_expenses/usecase/create_income_expenses_usecase.dart';
 import 'package:smart_money/features/income_expenses/usecase/delete_income_expenses_useacase.dart';
@@ -41,39 +42,66 @@ class IncomeExpensesBloc extends Cubit<IncomeExpensesState> {
     emit(state.copyWith(baseFormData: newData));
   }
 
-  Future<bool> addCashMoney() async {
+  Future<bool> addCashMoney(bool isIncome, double? incomeExpensesMoney) async {
     final cash = state.baseFormData?.getValue<String>(FieldIncomeExpenses.cash);
 
+    double _cash = BaseUtils.roundDouble(double.parse(cash ?? '0.0'), 2);
+    if (incomeExpensesMoney != null) {
+      _cash = incomeExpensesMoney + _cash;
+    }
+
     await _addCashUseCase.execute(
-      BaseUtils.roundDouble(double.parse(cash ?? '0.0'), 2),
+      _cash,
     );
-    await readIncomeExpensesList();
+    await readIncomeExpensesList(isIncome);
 
     return true;
   }
 
-  Future<void> readIncomeExpensesList([String? dateTime]) async {
+  Future<void> readIncomeExpensesList([
+    bool isIncome = true,
+  ]) async {
     final nowaday = DateTime.now();
 
-    final _dateTime = dateTime ??
-        BaseDateFormatter.formatDateTimeWithNameOfMonth(
-          nowaday,
-          'yyyy-MM-dd',
-        );
+    final _dateTime = BaseDateFormatter.formatDateTimeWithNameOfMonth(
+      nowaday,
+      'yyyy-MM-dd',
+    );
     final result = await _readIncomeExpensesUseCase.execute(_dateTime);
     result.when(
-      (success) => emit(
-        state.copyWith(
-          myAccount: success,
-        ),
-      ),
+      (success) {
+        final data = success.myAccountDetail;
+        List<MyAccountDetailResponse> myAccount = [];
+        if (data != null) {
+          if (isIncome) {
+            myAccount = data
+                .where((element) => element.type == TypeIncomeExpenses.income)
+                .toList();
+          } else {
+            myAccount = data
+                .where((element) => element.type == TypeIncomeExpenses.expenses)
+                .toList();
+          }
+        }
+
+        final response = MyAccountResponse(
+          incomeExpenseMoney: success.incomeExpenseMoney,
+          myAccountDetail: myAccount,
+        );
+
+        emit(
+          state.copyWith(
+            myAccount: response,
+          ),
+        );
+      },
       (error) => null,
     );
   }
 
-  void deleteIncomeExpenses(String id) async {
+  void deleteIncomeExpenses(String id, bool isIncome) async {
     await _deleteIncomeExpensesUseCase.execute(id);
-    await readIncomeExpensesList();
+    await readIncomeExpensesList(isIncome);
   }
 
   void createIncomeExpenses(bool isIncome) async {
@@ -84,7 +112,7 @@ class IncomeExpensesBloc extends Cubit<IncomeExpensesState> {
     final detail =
         state.baseFormData?.getValue<String>(FieldIncomeExpenses.detail);
 
-    final moneyTotal = !isIncome
+    final moneyTotal = isIncome
         ? (state.myAccount?.incomeExpenseMoney ?? 0) +
             double.parse(money ?? '0.0')
         : (state.myAccount?.incomeExpenseMoney ?? 0) -
@@ -95,16 +123,16 @@ class IncomeExpensesBloc extends Cubit<IncomeExpensesState> {
       detail: detail,
       dateTime: dateTime,
       incomeExpensesMoney: BaseUtils.roundDouble(moneyTotal, 2),
-      type: !isIncome ? TypeIncomeExpenses.income : TypeIncomeExpenses.expenses,
+      type: isIncome ? TypeIncomeExpenses.income : TypeIncomeExpenses.expenses,
     );
 
     await _createIncomeExpensesUseCase.execute(request);
-    await readIncomeExpensesList();
+    await readIncomeExpensesList(isIncome);
   }
 
   Future<bool> editIncomeExpenses(
     String id,
-    bool isIncrease,
+    bool isIncome,
     String exMoney,
     TypeIncomeExpenses type,
   ) async {
@@ -118,7 +146,7 @@ class IncomeExpensesBloc extends Cubit<IncomeExpensesState> {
         ? (state.myAccount?.incomeExpenseMoney ?? 0) + double.parse(exMoney)
         : (state.myAccount?.incomeExpenseMoney ?? 0) - double.parse(exMoney);
 
-    final moneyTotal = !isIncrease
+    final moneyTotal = isIncome
         ? moneyUndo + double.parse(money ?? '0.0')
         : moneyUndo - double.parse(money ?? '0.0');
 
@@ -128,8 +156,7 @@ class IncomeExpensesBloc extends Cubit<IncomeExpensesState> {
       detail: detail,
       dateTime: dateTime,
       incomeExpensesMoney: BaseUtils.roundDouble(moneyTotal, 2),
-      type:
-          !isIncrease ? TypeIncomeExpenses.income : TypeIncomeExpenses.expenses,
+      type: isIncome ? TypeIncomeExpenses.income : TypeIncomeExpenses.expenses,
     );
 
     await _updateIncomeExpensesUseCase.execute(request);
