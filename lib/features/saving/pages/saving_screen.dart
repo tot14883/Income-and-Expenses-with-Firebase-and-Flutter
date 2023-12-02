@@ -68,7 +68,7 @@ class _SavingScreenState extends BaseState<SavingScreen> {
           key: _formKey,
           onChanged: context.read<SavingBloc>().onChanged,
           child: CustomScrollView(
-            physics: const NeverScrollableScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(

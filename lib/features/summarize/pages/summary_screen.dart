@@ -81,7 +81,7 @@ class _SummaryScreenState extends BaseState<SummaryScreen> {
       ),
       bodyBuilder: (context, constraint) {
         return CustomScrollView(
-          physics: const NeverScrollableScrollPhysics(),
+          // physics: const NeverScrollableScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: Padding(

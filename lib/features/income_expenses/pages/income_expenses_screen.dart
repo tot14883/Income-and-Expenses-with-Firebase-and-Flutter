@@ -94,7 +94,7 @@ class _IncomeExpensesScreenState extends BaseState<IncomeExpensesScreen> {
           key: _formKey,
           onChanged: context.read<IncomeExpensesBloc>().onChanged,
           child: CustomScrollView(
-            physics: const NeverScrollableScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
