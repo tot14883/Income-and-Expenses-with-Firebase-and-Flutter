@@ -1,29 +1,34 @@
 import 'package:injectable/injectable.dart';
 import 'package:smart_money/core/application/usecase.dart';
 import 'package:smart_money/core/firebase/database/firebase_store_database.dart';
-import 'package:smart_money/features/authentication/user_and_pass.dart';
+import 'package:smart_money/core/local_storage/base_shared_preference.dart';
 import 'package:smart_money/features/income_expenses/enum/type_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/model/response/my_account_response.dart';
-// import 'package:smart_money/features/authentication/user_and_pass.dart';
 
 @injectable
 class ReadIncomeExpensesUseCase extends UseCase<String, MyAccountResponse> {
   FirebaseStoreDatabase firebaseStoreDatabase;
+  BaseSharedPreference baseSharedPreference;
 
-  ReadIncomeExpensesUseCase(this.firebaseStoreDatabase);
+  ReadIncomeExpensesUseCase(
+    this.firebaseStoreDatabase,
+    this.baseSharedPreference,
+  );
 
   @override
   Future<MyAccountResponse> exec(String request) async {
     try {
+      final token =
+          baseSharedPreference.getString(BaseSharePreferenceKey.token);
       final collect = await firebaseStoreDatabase
           .collection('users')
-          .doc(UserAndPass.token)
+          .doc(token)
           .get()
           .then((value) => value.data() as Map<String, dynamic>);
 
       final incomeExpensesListCollect = await firebaseStoreDatabase
           .collection('users')
-          .doc(UserAndPass.token)
+          .doc(token)
           .collection('income_expenses_list')
           .orderBy('created_at')
           .get()

@@ -2,17 +2,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_money/core/application/usecase.dart';
 import 'package:smart_money/core/firebase/database/firebase_store_database.dart';
-import 'package:smart_money/features/authentication/user_and_pass.dart';
+import 'package:smart_money/core/local_storage/base_shared_preference.dart';
 import 'package:smart_money/features/income_expenses/model/request/my_account_request.dart';
 
 @injectable
 class CreateSavingUseCase extends UseCase<MyAccountRequest, void> {
   FirebaseStoreDatabase firebaseStoreDatabase;
+  BaseSharedPreference baseSharedPreference;
 
-  CreateSavingUseCase(this.firebaseStoreDatabase);
+  CreateSavingUseCase(
+    this.firebaseStoreDatabase,
+    this.baseSharedPreference,
+  );
 
   @override
   Future<void> exec(MyAccountRequest request) async {
+    final token = baseSharedPreference.getString(BaseSharePreferenceKey.token);
     final collect = firebaseStoreDatabase.collection('users');
     final id = collect.doc().id;
 
@@ -29,12 +34,12 @@ class CreateSavingUseCase extends UseCase<MyAccountRequest, void> {
       "created_at": FieldValue.serverTimestamp(),
     };
 
-    await collect.doc(UserAndPass.token).collection('saving_list').doc(id).set(
+    await collect.doc(token).collection('saving_list').doc(id).set(
           savingList,
           SetOptions(merge: true),
         );
 
-    await collect.doc(UserAndPass.token).set(
+    await collect.doc(token).set(
           myData,
           SetOptions(merge: true),
         );

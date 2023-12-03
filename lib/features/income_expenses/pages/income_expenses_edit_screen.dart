@@ -9,6 +9,7 @@ import 'package:smart_money/features/income_expenses/bloc/income_expenses_bloc.d
 import 'package:smart_money/features/income_expenses/enum/field_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/enum/type_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/model/response/my_account_response.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
@@ -59,12 +60,13 @@ class _IncomeExpensesEditScreenState
   Widget build(BuildContext context) {
     return BaseScaffold(
       isLoadingStream: context.watch<IncomeExpensesBloc>().isLoading,
+      imgBgPath: Assets.imgs.imgBg.path,
       appBar: BaseAppBar(
         title: Text(
           isIncome ? 'แก้ไขรายรับ' : 'แก้ไขรายจ่าย',
           style: AppStyle.txtHeader2,
         ),
-        bgColor: AppColor.whiteColor,
+        bgColor: AppColor.primary,
       ),
       bodyBuilder: (context, constraint) {
         return BaseForm(

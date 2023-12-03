@@ -9,6 +9,7 @@ import 'package:smart_money/features/saving/bloc/state/saving_state.dart';
 import 'package:smart_money/features/saving/enum/field_saving_enum.dart';
 import 'package:smart_money/features/saving/widgets/saving_list_widget.dart';
 import 'package:smart_money/features/saving/widgets/saving_switch_widget.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
@@ -56,12 +57,13 @@ class _SavingScreenState extends BaseState<SavingScreen> {
 
     return BaseScaffold(
       isLoadingStream: context.watch<SavingBloc>().isLoading,
+      imgBgPath: Assets.imgs.imgBg.path,
       appBar: BaseAppBar(
         title: Text(
           'การออม',
           style: AppStyle.txtHeader2,
         ),
-        bgColor: AppColor.whiteColor,
+        bgColor: AppColor.primary,
       ),
       bodyBuilder: (context, constraint) {
         return BaseForm(

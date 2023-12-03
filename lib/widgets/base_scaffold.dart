@@ -16,6 +16,7 @@ class BaseScaffold extends StatelessWidget {
   final bool isWillPop;
   final Stream<bool>? isLoadingStream;
   final Widget? drawer;
+  final String? imgBgPath;
 
   const BaseScaffold({
     Key? key,
@@ -33,6 +34,7 @@ class BaseScaffold extends StatelessWidget {
     this.isWillPop = false,
     this.isLoadingStream,
     this.drawer,
+    this.imgBgPath,
   }) : super(key: key);
 
   @override
@@ -49,17 +51,28 @@ class BaseScaffold extends StatelessWidget {
                   : EdgeInsets.zero,
               child: bottomNavigationBar,
             ),
-            body: GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: () {
-                // for remove primary focus and trigger the keyboard to dismiss.
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-              child: SafeArea(
-                bottom: isSafeBottom,
-                top: isSafeTop,
-                child: LayoutBuilder(
-                  builder: bodyBuilder,
+            body: Container(
+              height: MediaQuery.of(context).size.height,
+              decoration: imgBgPath != null
+                  ? BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(imgBgPath ?? ''),
+                        fit: BoxFit.fill,
+                      ),
+                    )
+                  : null,
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  // for remove primary focus and trigger the keyboard to dismiss.
+                  FocusManager.instance.primaryFocus?.unfocus();
+                },
+                child: SafeArea(
+                  bottom: isSafeBottom,
+                  top: isSafeTop,
+                  child: LayoutBuilder(
+                    builder: bodyBuilder,
+                  ),
                 ),
               ),
             ),

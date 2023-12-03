@@ -8,6 +8,7 @@ import 'package:smart_money/features/summarize/bloc/state/summary_state.dart';
 import 'package:smart_money/features/summarize/bloc/summary_bloc.dart';
 import 'package:smart_money/features/summarize/widgets/summary_list_widget.dart';
 import 'package:smart_money/features/summarize/widgets/summary_switch_widget.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
 import 'package:smart_money/widgets/base_date_picker.dart';
@@ -49,12 +50,13 @@ class _SummaryScreenState extends BaseState<SummaryScreen> {
 
     return BaseScaffold(
       isLoadingStream: context.watch<SummaryBloc>().isLoading,
+      imgBgPath: Assets.imgs.imgBg.path,
       appBar: BaseAppBar(
         title: Text(
           'สรุป',
           style: AppStyle.txtHeader2,
         ),
-        bgColor: AppColor.whiteColor,
+        bgColor: AppColor.primary,
         actions: [
           PopupMenuButton<String>(
             onSelected: (String value) async {

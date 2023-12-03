@@ -12,6 +12,9 @@ import 'package:flutter/widgets.dart';
 class $AssetsImgsGen {
   const $AssetsImgsGen();
 
+  /// File path: assets/imgs/img_bg.png
+  AssetGenImage get imgBg => const AssetGenImage('assets/imgs/img_bg.png');
+
   /// File path: assets/imgs/img_calendar.png
   AssetGenImage get imgCalendar =>
       const AssetGenImage('assets/imgs/img_calendar.png');
@@ -20,12 +23,17 @@ class $AssetsImgsGen {
   AssetGenImage get imgEmail =>
       const AssetGenImage('assets/imgs/img_email.png');
 
+  /// File path: assets/imgs/img_logo_app.png
+  AssetGenImage get imgLogoApp =>
+      const AssetGenImage('assets/imgs/img_logo_app.png');
+
   /// File path: assets/imgs/img_password.png
   AssetGenImage get imgPassword =>
       const AssetGenImage('assets/imgs/img_password.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [imgCalendar, imgEmail, imgPassword];
+  List<AssetGenImage> get values =>
+      [imgBg, imgCalendar, imgEmail, imgLogoApp, imgPassword];
 }
 
 class Assets {

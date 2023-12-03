@@ -10,6 +10,7 @@ import 'package:smart_money/features/income_expenses/model/response/my_account_r
 import 'package:smart_money/features/saving/bloc/saving_bloc.dart';
 import 'package:smart_money/features/saving/enum/field_saving_enum.dart';
 import 'package:smart_money/features/saving/widgets/saving_switch_widget.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
@@ -57,12 +58,13 @@ class _SavingEditScreenState extends BaseState<SavingEditScreen> {
   Widget build(BuildContext context) {
     return BaseScaffold(
       isLoadingStream: context.watch<SavingBloc>().isLoading,
+      imgBgPath: Assets.imgs.imgBg.path,
       appBar: BaseAppBar(
         title: Text(
           'แก้ไขการออม',
           style: AppStyle.txtHeader2,
         ),
-        bgColor: AppColor.whiteColor,
+        bgColor: AppColor.primary,
       ),
       bodyBuilder: (context, constraint) {
         return BaseForm(

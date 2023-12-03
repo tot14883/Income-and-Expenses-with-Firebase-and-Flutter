@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 enum BaseSharePreferenceKey {
   isFirstTime,
   localeCode,
+  token,
 }
 
 extension _BaseSharePreferenceKeyStr on BaseSharePreferenceKey {
@@ -13,7 +14,8 @@ extension _BaseSharePreferenceKeyStr on BaseSharePreferenceKey {
         return 'IS_FIRST_TIME';
       case BaseSharePreferenceKey.localeCode:
         return 'LOCALE_CODE';
-
+      case BaseSharePreferenceKey.token:
+        return 'TOKEN';
       default:
         assert(false);
     }

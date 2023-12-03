@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
+      imgBgPath: Assets.imgs.imgBg.path,
       bodyBuilder: (context, constraint) {
         return SingleChildScrollView(
           child: Column(

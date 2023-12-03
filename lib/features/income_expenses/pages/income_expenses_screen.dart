@@ -10,6 +10,7 @@ import 'package:smart_money/features/income_expenses/bloc/income_expenses_bloc.d
 import 'package:smart_money/features/income_expenses/bloc/state/income_expenses_state.dart';
 import 'package:smart_money/features/income_expenses/enum/field_income_expenses_enum.dart';
 import 'package:smart_money/features/income_expenses/widgets/income_expenses_list_widget.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/util/date_format.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
@@ -65,12 +66,13 @@ class _IncomeExpensesScreenState extends BaseState<IncomeExpensesScreen> {
 
     return BaseScaffold(
       isLoadingStream: context.watch<IncomeExpensesBloc>().isLoading,
+      imgBgPath: Assets.imgs.imgBg.path,
       appBar: BaseAppBar(
         title: Text(
           isIncome ? 'รายรับ' : 'รายจ่าย',
           style: AppStyle.txtHeader2,
         ),
-        bgColor: AppColor.whiteColor,
+        bgColor: AppColor.primary,
         actions: [
           PopupMenuButton<String>(
             onSelected: (String value) async {

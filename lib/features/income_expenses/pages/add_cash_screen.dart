@@ -7,6 +7,7 @@ import 'package:smart_money/core/style/app_style.dart';
 import 'package:smart_money/features/income_expenses/bloc/income_expenses_bloc.dart';
 import 'package:smart_money/features/income_expenses/bloc/state/income_expenses_state.dart';
 import 'package:smart_money/features/income_expenses/enum/field_income_expenses_enum.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
 import 'package:smart_money/widgets/base_button.dart';
@@ -40,12 +41,13 @@ class _AddCashScreenState extends BaseState<AddCashScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
+      imgBgPath: Assets.imgs.imgBg.path,
       appBar: BaseAppBar(
         title: Text(
           'เพิ่มเงินในบัญชี',
           style: AppStyle.txtHeader2,
         ),
-        bgColor: AppColor.whiteColor,
+        bgColor: AppColor.primary,
       ),
       bodyBuilder: (context, constraint) {
         return Padding(

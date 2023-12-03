@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smart_money/core/route/route_name.dart';
 import 'package:smart_money/core/style/app_color.dart';
 import 'package:smart_money/core/style/app_style.dart';
+import 'package:smart_money/features/authentication/bloc/authentication_bloc.dart';
 import 'package:smart_money/features/authentication/enum/field_login_enum.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_button.dart';
@@ -30,6 +32,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
       bodyBuilder: (context, constraint) {
         return BaseForm(
           key: _formKey,
+          onChanged: context.read<AuthenticationBloc>().onChanged,
           child: Padding(
             padding: const EdgeInsets.all(16).r,
             child: Column(
@@ -87,10 +90,18 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                 BaseButton(
                   buttonType: ButtonType.secondary,
                   width: 80.w,
-                  onTap: () {
-                    if (_emailController.text == 'admin@mail.com' &&
-                        _passwordController.text == '123456') {
-                      context.pushReplacementNamed(home);
+                  onTap: () async {
+                    if (_emailController.text.isEmpty ||
+                        _passwordController.text.isEmpty) {
+                      _showMyDialog();
+                      return;
+                    } else {
+                      final result =
+                          await context.read<AuthenticationBloc>().postLogin();
+
+                      if (result) {
+                        context.pushReplacementNamed(home);
+                      }
                     }
                   },
                   text: 'เข้าสู่ระบบ',
@@ -98,6 +109,36 @@ class _LoginScreenState extends BaseState<LoginScreen> {
               ],
             ),
           ),
+        );
+      },
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'Warning',
+            style: AppStyle.txtHeader2,
+          ),
+          content: Text(
+            'กรุณากรอกข้อมูลให้ครบ',
+            style: AppStyle.txtHeader3,
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'OK',
+                style: AppStyle.txtBody2,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         );
       },
     );

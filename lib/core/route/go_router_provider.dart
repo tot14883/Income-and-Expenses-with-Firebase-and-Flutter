@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:smart_money/core/get_it/di_instance.dart';
 import 'package:smart_money/core/route/route_name.dart';
-import 'package:smart_money/features/authentication/pages/loging_screen.dart';
+import 'package:smart_money/features/authentication/bloc/authentication_bloc.dart';
+import 'package:smart_money/features/authentication/pages/login_screen.dart';
 import 'package:smart_money/features/example/bloc/example_bloc.dart';
 import 'package:smart_money/features/example/pages/example_screen.dart';
 import 'package:smart_money/features/home/pages/home_screen.dart';
@@ -61,7 +62,10 @@ class GoRouterProvider {
           pageBuilder: (context, state) => CustomPageRouteBuilder.route(
             transitionType: RouteTransition.fadeThrough,
             key: state.pageKey,
-            child: LoginScreen(key: state.pageKey),
+            child: BlocProvider<AuthenticationBloc>(
+              create: (BuildContext context) => getIt<AuthenticationBloc>(),
+              child: LoginScreen(key: state.pageKey),
+            ),
           ),
         ),
         GoRoute(
