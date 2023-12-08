@@ -7,5 +7,6 @@ part 'authentication_state.freezed.dart';
 class AuthenticationState with _$AuthenticationState {
   const factory AuthenticationState({
     BaseFormData? baseFormData,
+    bool? isSuccess,
   }) = _AuthenticationState;
 }

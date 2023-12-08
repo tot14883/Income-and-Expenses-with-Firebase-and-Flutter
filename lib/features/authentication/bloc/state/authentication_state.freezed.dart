@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AuthenticationState {
   BaseFormData? get baseFormData => throw _privateConstructorUsedError;
+  bool? get isSuccess => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthenticationStateCopyWith<AuthenticationState> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $AuthenticationStateCopyWith<$Res> {
           AuthenticationState value, $Res Function(AuthenticationState) then) =
       _$AuthenticationStateCopyWithImpl<$Res, AuthenticationState>;
   @useResult
-  $Res call({BaseFormData? baseFormData});
+  $Res call({BaseFormData? baseFormData, bool? isSuccess});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
   @override
   $Res call({
     Object? baseFormData = freezed,
+    Object? isSuccess = freezed,
   }) {
     return _then(_value.copyWith(
       baseFormData: freezed == baseFormData
           ? _value.baseFormData
           : baseFormData // ignore: cast_nullable_to_non_nullable
               as BaseFormData?,
+      isSuccess: freezed == isSuccess
+          ? _value.isSuccess
+          : isSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$AuthenticationStateImplCopyWith<$Res>
       __$$AuthenticationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({BaseFormData? baseFormData});
+  $Res call({BaseFormData? baseFormData, bool? isSuccess});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? baseFormData = freezed,
+    Object? isSuccess = freezed,
   }) {
     return _then(_$AuthenticationStateImpl(
       baseFormData: freezed == baseFormData
           ? _value.baseFormData
           : baseFormData // ignore: cast_nullable_to_non_nullable
               as BaseFormData?,
+      isSuccess: freezed == isSuccess
+          ? _value.isSuccess
+          : isSuccess // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -92,14 +103,16 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AuthenticationStateImpl implements _AuthenticationState {
-  const _$AuthenticationStateImpl({this.baseFormData});
+  const _$AuthenticationStateImpl({this.baseFormData, this.isSuccess});
 
   @override
   final BaseFormData? baseFormData;
+  @override
+  final bool? isSuccess;
 
   @override
   String toString() {
-    return 'AuthenticationState(baseFormData: $baseFormData)';
+    return 'AuthenticationState(baseFormData: $baseFormData, isSuccess: $isSuccess)';
   }
 
   @override
@@ -108,11 +121,13 @@ class _$AuthenticationStateImpl implements _AuthenticationState {
         (other.runtimeType == runtimeType &&
             other is _$AuthenticationStateImpl &&
             (identical(other.baseFormData, baseFormData) ||
-                other.baseFormData == baseFormData));
+                other.baseFormData == baseFormData) &&
+            (identical(other.isSuccess, isSuccess) ||
+                other.isSuccess == isSuccess));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, baseFormData);
+  int get hashCode => Object.hash(runtimeType, baseFormData, isSuccess);
 
   @JsonKey(ignore: true)
   @override
@@ -123,11 +138,14 @@ class _$AuthenticationStateImpl implements _AuthenticationState {
 }
 
 abstract class _AuthenticationState implements AuthenticationState {
-  const factory _AuthenticationState({final BaseFormData? baseFormData}) =
-      _$AuthenticationStateImpl;
+  const factory _AuthenticationState(
+      {final BaseFormData? baseFormData,
+      final bool? isSuccess}) = _$AuthenticationStateImpl;
 
   @override
   BaseFormData? get baseFormData;
+  @override
+  bool? get isSuccess;
   @override
   @JsonKey(ignore: true)
   _$$AuthenticationStateImplCopyWith<_$AuthenticationStateImpl> get copyWith =>

@@ -106,6 +106,18 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                   },
                   text: 'เข้าสู่ระบบ',
                 ),
+                SizedBox(
+                  height: 32.h,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    context.pushNamed(signUp);
+                  },
+                  child: Text(
+                    'สมัครสมาชิก',
+                    style: AppStyle.txtHeader3,
+                  ),
+                ),
               ],
             ),
           ),

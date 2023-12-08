@@ -10,3 +10,4 @@ const String addCash = 'add-cash';
 const String editSaving = 'edit-saving';
 const String editIncomeExpenses = 'edit-income-expenses';
 const String summary = 'summary';
+const String signUp = 'signUp';
