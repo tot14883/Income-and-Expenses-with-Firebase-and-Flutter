@@ -16,68 +16,72 @@ class HomeScreen extends StatelessWidget {
       imgBgPath: Assets.imgs.imgBg.path,
       bodyBuilder: (context, constraint) {
         return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'หน้าหลัก',
-                style: AppStyle.txtHeader2,
-              ),
-              SizedBox(
-                height: 32.h,
-              ),
-              Assets.imgs.imgCalendar.image(),
-              SizedBox(
-                height: 8.h,
-              ),
-              BaseButton(
-                width: 120.w,
-                onTap: () {
-                  context.pushNamed(
-                    incomeAndExpenses,
-                    queryParameters: {
-                      'isIncome': 'true',
-                    },
-                  );
-                },
-                text: 'รายรับ',
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              BaseButton(
-                width: 120.w,
-                onTap: () {
-                  context.pushNamed(
-                    incomeAndExpenses,
-                    queryParameters: {
-                      'isIncome': 'false',
-                    },
-                  );
-                },
-                text: 'รายจ่าย',
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              BaseButton(
-                width: 80.w,
-                onTap: () {
-                  context.pushNamed(saving);
-                },
-                text: 'การออม',
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              BaseButton(
-                width: 80.w,
-                onTap: () {
-                  context.pushNamed(summary);
-                },
-                text: 'สรุป',
-              ),
-            ],
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 132.h,
+                ),
+                BaseButton(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  width: MediaQuery.of(context).size.width,
+                  onTap: () {
+                    context.pushNamed(
+                      incomeAndExpenses,
+                      queryParameters: {
+                        'isIncome': 'true',
+                      },
+                    );
+                  },
+                  text: 'รายรับ / Revenue',
+                  textStyle: AppStyle.txtHeader1,
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                BaseButton(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  width: MediaQuery.of(context).size.width,
+                  onTap: () {
+                    context.pushNamed(
+                      incomeAndExpenses,
+                      queryParameters: {
+                        'isIncome': 'false',
+                      },
+                    );
+                  },
+                  text: 'รายจ่าย / Expenses',
+                  textStyle: AppStyle.txtHeader1,
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                BaseButton(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  width: MediaQuery.of(context).size.width,
+                  onTap: () {
+                    context.pushNamed(saving);
+                  },
+                  text: 'การออม / Savings',
+                  textStyle: AppStyle.txtHeader1,
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                BaseButton(
+                  margin: EdgeInsets.symmetric(horizontal: 16.w),
+                  width: MediaQuery.of(context).size.width,
+                  onTap: () {
+                    context.pushNamed(summary);
+                  },
+                  text: 'สรุป / Summarize',
+                  textStyle: AppStyle.txtHeader1,
+                ),
+              ],
+            ),
           ),
         );
       },

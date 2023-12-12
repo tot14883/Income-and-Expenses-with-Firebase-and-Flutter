@@ -8,6 +8,7 @@ import 'package:smart_money/core/style/app_style.dart';
 import 'package:smart_money/features/authentication/bloc/authentication_bloc.dart';
 import 'package:smart_money/features/authentication/bloc/state/authentication_state.dart';
 import 'package:smart_money/features/authentication/enum/field_sign_up_enum.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_app_bar.dart';
 import 'package:smart_money/widgets/base_button.dart';
@@ -46,6 +47,7 @@ class _SignUpScreenState extends BaseState<SignUpScreen> {
         }
       },
       child: BaseScaffold(
+        imgBgPath: Assets.imgs.imgBg.path,
         isLoadingStream: context.watch<AuthenticationBloc>().isLoading,
         appBar: BaseAppBar(
           title: Text(

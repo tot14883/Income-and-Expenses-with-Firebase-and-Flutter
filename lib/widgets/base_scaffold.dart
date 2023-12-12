@@ -17,6 +17,7 @@ class BaseScaffold extends StatelessWidget {
   final Stream<bool>? isLoadingStream;
   final Widget? drawer;
   final String? imgBgPath;
+  final BoxFit? fit;
 
   const BaseScaffold({
     Key? key,
@@ -35,6 +36,7 @@ class BaseScaffold extends StatelessWidget {
     this.isLoadingStream,
     this.drawer,
     this.imgBgPath,
+    this.fit,
   }) : super(key: key);
 
   @override
@@ -57,7 +59,7 @@ class BaseScaffold extends StatelessWidget {
                   ? BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(imgBgPath ?? ''),
-                        fit: BoxFit.fill,
+                        fit: fit ?? BoxFit.fill,
                       ),
                     )
                   : null,

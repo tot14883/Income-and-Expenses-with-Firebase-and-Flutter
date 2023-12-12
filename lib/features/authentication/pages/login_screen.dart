@@ -7,6 +7,7 @@ import 'package:smart_money/core/style/app_color.dart';
 import 'package:smart_money/core/style/app_style.dart';
 import 'package:smart_money/features/authentication/bloc/authentication_bloc.dart';
 import 'package:smart_money/features/authentication/enum/field_login_enum.dart';
+import 'package:smart_money/generated/assets.gen.dart';
 import 'package:smart_money/utils/validate/vaildators.dart';
 import 'package:smart_money/widgets/base_button.dart';
 import 'package:smart_money/widgets/base_form.dart';
@@ -29,6 +30,8 @@ class _LoginScreenState extends BaseState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
+      imgBgPath: Assets.imgs.imgBg.path,
+      fit: BoxFit.fill,
       bodyBuilder: (context, constraint) {
         return BaseForm(
           key: _formKey,
